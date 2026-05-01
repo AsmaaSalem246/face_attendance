@@ -1,10 +1,8 @@
 import cv2
 
 def preprocess_image(img):
-    # تقليل noise
     denoised = cv2.GaussianBlur(img, (5, 5), 0)
 
-    # تحسين الإضاءة باستخدام LAB
     lab = cv2.cvtColor(denoised, cv2.COLOR_BGR2LAB)
     l, a, b = cv2.split(lab)
 
