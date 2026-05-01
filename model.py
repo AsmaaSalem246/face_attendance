@@ -7,17 +7,11 @@ from sklearn.neighbors import KNeighborsClassifier
 from mtcnn import MTCNN
 from preprocessing import preprocess_image
 
-# =========================
-# 📌 Safe path for encodings
-# =========================
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 ENCODINGS_PATH = os.path.join(BASE_DIR, "encodings.pkl")
 
 detector = MTCNN()
 
-# =========================
-# 📌 Load model safely
-# =========================
 def load_model():
 
     if not os.path.exists(ENCODINGS_PATH):
@@ -37,9 +31,6 @@ def load_model():
     return knn, y
 
 
-# =========================
-# 📌 Face Recognition
-# =========================
 def recognize_face(img):
 
     try:
@@ -47,7 +38,6 @@ def recognize_face(img):
 
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
-        # 🔥 MTCNN detection
         results = detector.detect_faces(img_rgb)
 
         if len(results) == 0:
@@ -55,12 +45,10 @@ def recognize_face(img):
 
         x, y_box, w, h = results[0]['box']
 
-        # fix negative values (important fix)
         x, y_box = abs(x), abs(y_box)
 
         face = img[y_box:y_box + h, x:x + w]
 
-        # preprocessing
         face = preprocess_image(face)
 
         face_rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
@@ -79,7 +67,6 @@ def recognize_face(img):
         else:
             name = "Unknown"
 
-        # draw box
         cv2.rectangle(img, (x, y_box), (x + w, y_box + h), (0, 255, 0), 2)
         cv2.putText(img, name, (x, y_box - 10),
                     cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0, 255, 0), 2)
