@@ -1,0 +1,9 @@
+streamlit
+opencv-python
+face-recognition
+numpy
+scikit-learn
+pandas
+mtcnn
+pillow
+tensorflow
