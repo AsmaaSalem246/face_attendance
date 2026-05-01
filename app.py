@@ -76,6 +76,9 @@ elif mode == "Live Camera":
             st.error("Camera error")
             break
 
+        # 👇 الحل هنا (Mirror)
+        frame = cv2.flip(frame, 1)
+
         name, processed = recognize_face(frame)
 
         if name not in ["Unknown", "No face found", "No encoding"]:
@@ -84,9 +87,5 @@ elif mode == "Live Camera":
         FRAME.image(processed, channels="BGR")
 
     cap.release()
-
-# --------------------------
-# 📊 ATTENDANCE TABLE
-# --------------------------
 st.divider()
-show_attendance()
+show_attendance() 
