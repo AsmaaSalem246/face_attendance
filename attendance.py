@@ -11,19 +11,15 @@ def mark_attendance(name):
 
     file_path = os.path.join(folder, f"{today}.csv")
 
-    # لو الملف مش موجود
     if not os.path.exists(file_path):
         df = pd.DataFrame(columns=["Name", "Date", "Time"])
         df.to_csv(file_path, index=False)
 
-    # قراءة البيانات
     df = pd.read_csv(file_path)
 
-    # ❌ منع التكرار في نفس اليوم
     if name in df["Name"].values:
         return "Already marked today ❌"
 
-    # إضافة سجل جديد
     new_row = pd.DataFrame([[name, today, time_now]],
                            columns=["Name", "Date", "Time"])
 
