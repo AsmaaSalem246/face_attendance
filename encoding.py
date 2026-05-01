@@ -24,22 +24,18 @@ for person_name in os.listdir(dataset_path):
                 image_path = os.path.join(person_path, image_name)
                 img = cv2.imread(image_path)
 
-                # 🔥 MTCNN detect
                 img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
                 results = detector.detect_faces(img_rgb)
 
                 if len(results) == 0:
                     continue
 
-                # ناخد أول face
                 x, y, w, h = results[0]['box']
 
                 face = img[y:y+h, x:x+w]
 
-                # preprocessing
                 face = preprocess_image(face)
 
-                # RGB for encoding
                 face_rgb = cv2.cvtColor(face, cv2.COLOR_BGR2RGB)
 
                 encodings = face_recognition.face_encodings(face_rgb)
@@ -50,7 +46,6 @@ for person_name in os.listdir(dataset_path):
 
 print("Encodings done with MTCNN ✅")
 
-# حفظ
 data = {
     "encodings": known_encodings,
     "names": known_names
