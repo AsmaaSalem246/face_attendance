@@ -10,14 +10,8 @@ st.set_page_config(page_title="Face Attendance System", layout="wide")
 
 st.title("🎓 Face Recognition Attendance System")
 
-# --------------------------
-# 📌 INPUT MODE
-# --------------------------
 mode = st.radio("Choose mode:", ["Upload Image", "Live Camera"])
 
-# --------------------------
-# 📊 SHOW TODAY ATTENDANCE
-# --------------------------
 def show_attendance():
     today = pd.Timestamp.today().strftime("%Y-%m-%d")
     file_path = f"attendance_logs/{today}.csv"
@@ -30,9 +24,6 @@ def show_attendance():
     else:
         st.info("No attendance yet today")
 
-# --------------------------
-# 📸 Upload Image
-# --------------------------
 if mode == "Upload Image":
 
     uploaded_file = st.file_uploader("Upload image", type=["jpg", "png", "jpeg"])
@@ -58,9 +49,6 @@ if mode == "Upload Image":
             else:
                 st.error("Face not recognized ❌")
 
-# --------------------------
-# 🎥 Live Camera
-# --------------------------
 elif mode == "Live Camera":
 
     run = st.checkbox("Start Camera")
@@ -76,7 +64,6 @@ elif mode == "Live Camera":
             st.error("Camera error")
             break
 
-        # 👇 الحل هنا (Mirror)
         frame = cv2.flip(frame, 1)
 
         name, processed = recognize_face(frame)
